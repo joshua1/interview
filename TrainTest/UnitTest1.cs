@@ -83,11 +83,10 @@ namespace TrainTest
             Assert.AreEqual(22,routeProcessor.ComputesPathDistance(routesModel,path));
         }
         [TestMethod]
-        [ExpectedException(typeof(ArgumentException))]
         public void Test_Distance_Of_Route_AED()
         {
             var path = "A-E-D";
-            routeProcessor.ComputesPathDistance(routesModel,path);
+           Assert.AreEqual(-1,routeProcessor.ComputesPathDistance(routesModel,path));
         }
 
         [TestMethod]

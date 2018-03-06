@@ -16,11 +16,12 @@ namespace TrainProblem.Implementations
             string[] routeInfos = routes.Split(',');
             foreach (var routeInfo in routeInfos)
             {
-                if (routeInfo.Length == 3)
+                var currentRouteInfo = routeInfo.Trim();
+                if (currentRouteInfo.Length == 3)
                 {
-                    var originStation = new Town(routeInfo[0].ToString());
-                    var destinationStation = new Town(routeInfo[1].ToString());
-                    var stationPath = new Route(originStation, destinationStation, int.Parse(routeInfo[2].ToString()));
+                    var originStation = new Town(currentRouteInfo[0].ToString());
+                    var destinationStation = new Town(currentRouteInfo[1].ToString());
+                    var stationPath = new Route(originStation, destinationStation, int.Parse(currentRouteInfo[2].ToString()));
                     var node = routesModel.Where(k =>AreThesameTown( k.Key,originStation));
                     var nodeWithRoute =
                         routesModel.Where(k => AreThesameTown(k.Key,originStation) &&
