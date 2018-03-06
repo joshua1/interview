@@ -10,7 +10,11 @@ namespace TrainProblem.Implementations
         private readonly ITrainRouteLogic _trainLogic;
         private Dictionary<Town, Route> _routesModel;
 
-       
+        public RouteProcessing(Dictionary<Town, Route> routeModel,ITrainRouteLogic trainLogic)
+        {
+            _trainLogic = trainLogic;
+            _routesModel = routeModel;
+        }
 
         public RouteProcessing()
         {
