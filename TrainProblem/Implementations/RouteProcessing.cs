@@ -10,17 +10,17 @@ namespace TrainProblem.Implementations
         private readonly ITrainRouteLogic _trainLogic;
         private Dictionary<Town, Route> _routesModel;
 
-        public RouteProcessing(Dictionary<Town, Route> routeModel, ITrainRouteLogic trainLogic)
-        {
-            _routesModel = routeModel ?? new Dictionary<Town, Route>();
-            _trainLogic = trainLogic;
-        }
+       
 
         public RouteProcessing()
         {
             if (_routesModel == null)
             {
                 _routesModel = new Dictionary<Town, Route>();
+            }
+            if (_trainLogic == null)
+            {
+                _trainLogic=new TrainRouteLogic();
             }
         }
 
@@ -65,6 +65,7 @@ namespace TrainProblem.Implementations
             var endTown = new Town("C");
             var maxDistance = 30;
             DifferentRoutesWithMaxDistance(startTown, endTown, maxDistance);
+            ConsoleColour(ConsoleColor.White);
             Console.WriteLine("End of Solution");
             Console.ReadLine();
         }
@@ -154,7 +155,7 @@ namespace TrainProblem.Implementations
 
         private void DistanceQuestion(string paths)
         {
-            ConsoleColour(ConsoleColor.Green);
+            ConsoleColour(ConsoleColor.White);
             Console.WriteLine($"Computing the distance of route {paths} ....");
 
             var routeDistance = ComputesPathDistance(_routesModel, paths);
@@ -175,16 +176,18 @@ namespace TrainProblem.Implementations
 
         private void NumberOfTripsQuestion(Town startTown, Town endTown, int maxStops, bool isExact = false)
         {
-            ConsoleColour(ConsoleColor.Magenta);
+            ConsoleColour(ConsoleColor.White);
+            var exactString = isExact != true ? "exactly":"";
+            
             Console.WriteLine(
-                $"Computing the number of trips starting at {startTown} and ending at {endTown} with {maxStops} stops ...");
+                $"Computing the number of trips starting at {startTown.TownName} and ending at {endTown.TownName} with {exactString} {maxStops} stops ...");
 
             var numberOfTrips =
                 ComputeNumberOfTripsBetweenStations(_routesModel, startTown, endTown, maxStops, isExact);
             if (numberOfTrips > 0)
             {
                 ConsoleColour(ConsoleColor.Yellow);
-                if (isExact)
+                if (isExact==true)
                     Console.WriteLine(
                         $"The Number of trips starting at {startTown.TownName} and ending at {endTown.TownName} with exactly {maxStops} Stops is {numberOfTrips}");
                 else
@@ -204,7 +207,7 @@ namespace TrainProblem.Implementations
 
         private void LengthOfShortestRouteQuestion(Town startTown, Town endTown)
         {
-            ConsoleColour(ConsoleColor.DarkCyan);
+            ConsoleColour(ConsoleColor.White);
             Console.WriteLine(
                 $"Computing the length of the shortes Route from {startTown.TownName} to {endTown.TownName} .....");
             var shortest =
@@ -225,7 +228,7 @@ namespace TrainProblem.Implementations
 
         private void DifferentRoutesWithMaxDistance(Town startTown, Town endTown, int maxDistance)
         {
-            ConsoleColour(ConsoleColor.DarkBlue);
+            ConsoleColour(ConsoleColor.White);
             Console.WriteLine(
                 $"Computing the number of different routes from {startTown.TownName} to {endTown.TownName} with a maximum distance of {maxDistance}");
             int numberOfRoutes =
@@ -250,7 +253,11 @@ namespace TrainProblem.Implementations
             Console.WriteLine(
                 "Please enter a comma separated list of route nodes in the form start stop distance i.e AB7");
             var routes = Console.ReadLine();
-            return routes.Trim();
+            if (routes != null)
+            {
+                return routes.Trim();
+            }
+            return GetRoutesData();
         }
 
         private static void ConsoleColour(ConsoleColor color)
@@ -261,7 +268,7 @@ namespace TrainProblem.Implementations
         private static void InvalidInput()
         {
             ConsoleColour(ConsoleColor.Red);
-            Console.WriteLine("Invalid parameter details provided ");
+            Console.WriteLine("NO SUCH ROUTE");
         }
     }
 }

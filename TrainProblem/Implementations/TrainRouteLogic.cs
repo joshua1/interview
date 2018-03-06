@@ -41,6 +41,11 @@ namespace TrainProblem.Implementations
                         else
                         {
                             var routeForNode = keyValuePairs.FirstOrDefault().Value;
+                            while (routeForNode.NextRoute != null)
+                            {
+                                routeForNode = routeForNode.NextRoute;
+                                
+                            }
                             routeForNode.Next(stationPath);
                         }
                     }
@@ -93,7 +98,8 @@ namespace TrainProblem.Implementations
 
             if (depth != townsList.Count - 1)
             {
-                throw new ArgumentException("NO SUCH ROUTE");
+                
+                return -1; //NO SUCH ROUTE";
             }
             return finalValue;
         }
@@ -148,7 +154,7 @@ namespace TrainProblem.Implementations
             }
             else
             {
-                throw new ArgumentException("NO SUCH ROUTE");
+                return -1; //NO SUCH ROUTE";
             }
             startTown.TownVisited = false;
             return routes;
@@ -202,8 +208,8 @@ namespace TrainProblem.Implementations
                     currentRoute = currentRoute.NextRoute;
                 }
             }
-            else  
-                throw new ArgumentException("NO SUCH ROUTE");
+            else
+                return -1; //NO SUCH ROUTE";
             return routes;
         }
 
@@ -243,9 +249,9 @@ namespace TrainProblem.Implementations
                     currentRoute = currentRoute.NextRoute;
                 }
             }
-            else  
-                throw new ArgumentException("NO SUCH ROUTE");
-            
+            else
+                return -1; //NO SUCH ROUTE";
+
             startTown.TownVisited = false;
             return shortestRoute;
         }
