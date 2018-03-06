@@ -1,0 +1,7 @@
+.vs/
+.vscode/
+.idea/
+TrainProblem/bin/
+TrainProblem/Obj/
+TrainTest/bin/
+TrainTest/Obj/
